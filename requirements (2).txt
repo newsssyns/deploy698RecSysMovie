@@ -1,5 +1,4 @@
-
-pandas
-scikit-surprise
 streamlit
- 
+pandas
+scikit-learn
+scikit-surprise
