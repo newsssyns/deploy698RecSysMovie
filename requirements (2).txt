@@ -1,6 +1,3 @@
-
 pandas
-scikit-surprise
+surprise
 streamlit
-numpy==1.26.4
-surprise==4.0.3
