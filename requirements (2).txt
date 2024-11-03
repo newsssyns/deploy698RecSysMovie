@@ -1,6 +1,6 @@
-numpy
 streamlit
+scikit-learn
+scikit-surprise
 pickle
 pandas
-surprise
-streamlit run app_rec_movie_66130701713.py
+numpy
