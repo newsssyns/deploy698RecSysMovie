@@ -1,6 +1,6 @@
 import streamlit as st
 import pickle
-from myfunction_67130701713 import get_movie_recommendations
+from utils.myfunction_67130701713 import get_movie_recommendations
 
 # Load pre-trained user similarity data and user movie ratings
 with open('67130701713recommendation_usersim.pkl', 'rb') as file:
