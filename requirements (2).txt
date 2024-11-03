@@ -1,8 +1,0 @@
-numpy
-scikit-learn
-pandas
-scikit-surprise
-streamlit
-git add requirements.txt
-git commit -m "Add scikit-surprise to requirements"
-git push origin main
