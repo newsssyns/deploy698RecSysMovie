@@ -1,3 +1,0 @@
-git add runtime.txt requirements.txt
-git commit -m "Specify Python 3.8 and include scikit-surprise"
-git push origin main
