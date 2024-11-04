@@ -1,6 +1,5 @@
-
+scikit-surprise
 streamlit
 pandas
-surprise
 pickle
 numpy
