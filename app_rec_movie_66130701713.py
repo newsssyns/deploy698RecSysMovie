@@ -7,8 +7,8 @@ import pandas as pd
 st.title("Movie Recommendation System")
 
 # Load data from pickle file
-with open('/path/to/66130701713_recommendation_movie_svd.pkl', 'rb') as file:
-    svd_model, movie_ratings, movies = pickle.load(file)
+with open('66130701713_recommendation_movie_svd.pkl', 'rb') as file:
+    data = pickle.load(file)
 
 # User ID input
 user_id = st.number_input("Enter User ID:", min_value=1, value=1, step=1)
