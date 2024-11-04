@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
+from surprise import Reader, Dataset, SVD, accuracy
 
 
 # Title of the Streamlit app
@@ -8,7 +9,7 @@ st.title("Movie Recommendation System")
 
 # Load data from pickle file
 with open('66130701713_recommendation_movie_svd.pkl', 'rb') as file:
-    data = pickle.load(file)
+   svd_model, movie_ratings, movies = pickle.load(file)
 
 # User ID input
 user_id = st.number_input("Enter User ID:", min_value=1, value=1, step=1)
