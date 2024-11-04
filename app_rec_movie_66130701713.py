@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pickle
 import pandas as pd
@@ -8,7 +7,7 @@ import pandas as pd
 st.title("Movie Recommendation System")
 
 # Load data from pickle file
-with open('66130701713_recommendation_movie_svd.pkl', 'rb') as file:
+with open('/path/to/66130701713_recommendation_movie_svd.pkl', 'rb') as file:
     svd_model, movie_ratings, movies = pickle.load(file)
 
 # User ID input
