@@ -1,0 +1,5 @@
+streamlit
+pandas
+pickle
+numpy
+scikit-surprise @ git+https://github.com/NicolasHug/Surprise.git@master#egg=scikit-surprise
