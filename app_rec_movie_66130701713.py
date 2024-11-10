@@ -1,32 +1,47 @@
 import streamlit as st
 import pickle
 import pandas as pd
-from surprise import Reader, Dataset, SVD, accuracy
 
+# Load the saved model and encoders
+with open('model_penguin_66130701713.pkl', 'rb') as file:
+    model, species_encoder, island_encoder, sex_encoder = pickle.load(file)
 
-# Title of the Streamlit app
-st.title("Movie Recommendation System")
+# Define the prediction function
+def predict_penguin_species(island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex):
+    # Create a DataFrame for the input features
+    input_data = pd.DataFrame({
+        'island': [island],
+        'bill_length_mm': [bill_length_mm],
+        'bill_depth_mm': [bill_depth_mm],
+        'flipper_length_mm': [flipper_length_mm],
+        'body_mass_g': [body_mass_g],
+        'sex': [sex]
+    })
 
-# Load data from pickle file
-with open('66130701713_recommendation_movie_svd.pkl', 'rb') as file:
-   svd_model, movie_ratings, movies = pickle.load(file)
+    # Encode categorical features
+    input_data['island'] = island_encoder.transform(input_data['island'])
+    input_data['sex'] = sex_encoder.transform(input_data['sex'])
 
-# User ID input
-user_id = st.number_input("Enter User ID:", min_value=1, value=1, step=1)
+    # Make prediction
+    prediction = model.predict(input_data)[0]
 
-# Get recommendations for the user
-rated_user_movies = movie_ratings[movie_ratings['userId'] == user_id]['movieId'].values
-unrated_movies = movies[~movies['movieId'].isin(rated_user_movies)]['movieId']
-pred_rating = [svd_model.predict(user_id, movie_id) for movie_id in unrated_movies]
+    # Decode prediction to species name
+    predicted_species = species_encoder.inverse_transform([prediction])[0]
 
-# Sort predictions by estimated rating in descending order
-sorted_predictions = sorted(pred_rating, key=lambda x: x.est, reverse=True)
+    return predicted_species
 
-# Get top 10 movie recommendations
-top_recommendations = sorted_predictions[:10]
+# Streamlit app
+st.title("Penguin Species Prediction")
 
-# Display recommendations
-st.write(f"\nTop 10 movie recommendations for User {user_id}:")
-for recommendation in top_recommendations:
-    movie_title = movies[movies['movieId'] == recommendation.iid]['title'].values[0]
-    st.write(f"{movie_title} (Estimated Rating: {recommendation.est})")
+# Input fields
+island = st.selectbox("Island", island_encoder.classes_)
+bill_length_mm = st.number_input("Bill Length (mm)")
+bill_depth_mm = st.number_input("Bill Depth (mm)")
+flipper_length_mm = st.number_input("Flipper Length (mm)")
+body_mass_g = st.number_input("Body Mass (g)")
+sex = st.selectbox("Sex", sex_encoder.classes_)
+
+# Prediction button
+if st.button("Predict"):
+    predicted_species = predict_penguin_species(island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex)
+    st.success(f"The predicted species is: **{predicted_species}**")
